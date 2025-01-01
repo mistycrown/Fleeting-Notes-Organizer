@@ -1,0 +1,266 @@
+/* 卡片容器样式 */
+.note-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    padding-top: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 1rem;
+    background-color: var(--background-primary);
+}
+
+/* 卡片样式 */
+.note-card {
+    margin: 10px 0;
+    padding: 15px;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    background-color: var(--background-primary);
+}
+
+.note-card:hover {
+    background-color: var(--background-primary-alt);
+}
+
+.note-card .time {
+    color: var(--text-muted);
+    font-size: 0.8em;
+    margin-bottom: 8px;
+}
+
+/* 状态按钮样式 */
+.status-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    font-size: 0.8em;
+}
+
+/* 按钮容器样式 */
+.button-container {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 8px;
+    background-color: var(--background-secondary);
+    border-radius: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--background-modifier-border);
+    align-items: center;
+}
+
+/* 按钮组样式 */
+.filter-group, .tool-group {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.tool-group {
+    margin-left: auto;
+}
+
+/* 工具按钮样式 */
+.tool-button {
+    padding: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: transparent;
+    color: var(--text-normal);
+    border: 1px solid var(--background-modifier-border);
+}
+
+.tool-button:hover {
+    background-color: var(--background-modifier-hover);
+}
+
+/* 排序菜单样式 */
+.sort-group {
+    position: relative;
+}
+
+.sort-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: var(--background-primary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    min-width: 200px;
+    margin-top: 4px;
+}
+
+.sort-item {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.sort-item:hover {
+    background-color: var(--background-modifier-hover);
+}
+
+.sort-item.active {
+    background-color: var(--background-secondary-alt);
+    color: var(--text-accent);
+}
+
+.button-container button {
+    padding: 4px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0;
+}
+
+.button-container button.active {
+    background-color: var(--interactive-accent);
+    color: var(--text-on-accent);
+}
+
+.note-card button.processed {
+    background-color: #e0e0e0;
+    color: #333;
+    font-weight: bold;
+}
+
+.note-card button.unprocessed {
+    background-color: #FF5722;
+    color: white;
+    font-weight: bold;
+}
+
+.note-card button.open-note {
+    background-color: var(--interactive-accent);
+    color: var(--text-on-accent);
+}
+
+.note-card .content {
+    margin: 10px 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    overflow-x: hidden;
+    cursor: text;
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 10px;
+    background-color: var(--background-primary-alt);
+    border-radius: 4px;
+}
+
+.empty-message {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+
+/* 刷新按钮样式 */
+.refresh-button {
+    background-color: var(--interactive-accent);
+    color: var(--text-on-accent);
+    padding: 4px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0;
+}
+
+/* 标签样式 */
+.tags-container {
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.tag {
+    background-color: var(--tag-background);
+    color: var(--tag-color);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.8em;
+}
+
+/* 卡片按钮容器样式 */
+.card-buttons {
+    display: flex;
+    gap: 10px;  /* 增加按钮之间的间距 */
+    margin-bottom: 12px;
+    flex-wrap: wrap;  /* 在窄屏幕上自动换行 */
+}
+
+/* 按钮基础样式 */
+.note-card button {
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    border: none;
+    transition: background-color 0.2s ease;
+}
+
+/* 原文链接按钮样式 */
+.note-card button.source-link {
+    background-color: var(--background-modifier-border);
+    color: var(--text-normal);
+}
+
+.note-card button.source-link:hover {
+    background-color: var(--background-modifier-border-hover);
+}
+
+/* 内部链接样式 */
+.note-card .internal-link {
+    color: var(--link-color);
+    text-decoration: none;
+    border-bottom: 1px solid var(--link-color);
+    cursor: text;
+    word-break: break-all;
+}
+
+/* 笔记标题样式 */
+.note-card .note-title {
+    color: var(--text-muted);
+    font-size: 0.9em;
+    margin-top: 12px;
+    margin-bottom: 8px;
+    padding: 0 4px;
+}
+
+/* 添加视图容器的背景样式 */
+.workspace-leaf-content[data-type="note-cards-view"] {
+    background-color: var(--background-secondary);
+}
+
+/* 排序下拉菜单样式 */
+.sort-select {
+    padding: 4px 8px;
+    border-radius: 4px;
+    background-color: var(--background-primary);
+    color: var(--text-normal);
+    border: 1px solid var(--background-modifier-border);
+    cursor: pointer;
+}
+
+.sort-select:hover {
+    background-color: var(--background-primary-alt);
+}
+
+.sort-select option {
+    background-color: var(--background-primary);
+    color: var(--text-normal);
+} 

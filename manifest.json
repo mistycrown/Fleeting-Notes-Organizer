@@ -1,0 +1,9 @@
+{
+    "id": "fleeting-notes-organizer",
+    "name": "Fleeting-Notes Organizer",
+    "version": "1.0.0",
+    "minAppVersion": "0.15.0",
+    "description": "显示闪念笔记卡片并管理笔记状态",
+    "author": "蒺藜",
+    "isDesktopOnly": false
+} 
