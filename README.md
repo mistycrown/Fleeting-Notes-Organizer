@@ -14,9 +14,9 @@
 ## 安装方法
 
 ### 手动安装
-1. 下载此仓库的最新版本
-2. 解压下载的文件
-3. 将解压后的文件夹复制到 Obsidian 库文件夹中的 `.obsidian/plugins/` 目录下
+1. 下载此仓库的 `main.js`、`manifest.json` 和 `styles.css`（如果有）文件
+2. 在 Obsidian 库的 `.obsidian/plugins/` 目录下创建新文件夹 `fleeting-notes-organizer`
+3. 将下载的文件放入新创建的文件夹中
 4. 在 Obsidian 设置中启用插件
    - 打开设置 -> 第三方插件
    - 关闭安全模式
