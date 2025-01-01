@@ -198,9 +198,10 @@
 /* 卡片按钮容器样式 */
 .card-buttons {
     display: flex;
-    gap: 10px;  /* 增加按钮之间的间距 */
+    gap: 8px;  /* 减小按钮之间的间距 */
     margin-bottom: 12px;
     flex-wrap: wrap;  /* 在窄屏幕上自动换行 */
+    align-items: center;  /* 垂直居中对齐 */
 }
 
 /* 按钮基础样式 */
@@ -263,4 +264,69 @@
 .sort-select option {
     background-color: var(--background-primary);
     color: var(--text-normal);
+}
+
+/* 图标按钮基础样式 */
+.note-card button.icon-button {
+    padding: 4px 8px;
+    min-width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    transition: all 0.2s ease;
+    font-size: 0.9em;
+    white-space: nowrap;
+}
+
+.note-card button.icon-button:hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+}
+
+/* 特定按钮样式 */
+.note-card button.processed {
+    color: var(--text-normal);
+}
+
+.note-card button.unprocessed {
+    color: var(--text-normal);
+}
+
+.note-card button.icon-button svg {
+    color: var(--text-normal);  /* 所有图标使用统一的颜色 */
+}
+
+/* 添加工具提示样式 */
+.note-card button.icon-button[aria-label]:hover::after {
+    content: attr(aria-label);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 8px;
+    background-color: var(--background-modifier-border);
+    color: var(--text-normal);
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 1000;
+}
+
+/* 状态按钮样式 */
+.note-card button.status-button {
+    padding: 4px 12px;
+    height: 28px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: bold;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
 } 

@@ -1,4 +1,8 @@
 {
   "notesFolder": "05 clip",
-  "unprocessedButtonColor": "#c4b1ab"
+  "unprocessedButtonColor": "#eed9d2",
+  "processedButtonColor": "#f0f0f0",
+  "openNoteButtonColor": "#cee4f8",
+  "linkButtonColor": "#eefbf6",
+  "copyButtonColor": "#ecdcf9"
 }

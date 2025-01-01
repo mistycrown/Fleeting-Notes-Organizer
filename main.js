@@ -5,7 +5,11 @@ const obsidian = require('obsidian');
 // 添加默认设置
 const DEFAULT_SETTINGS = {
     notesFolder: 'notes',
-    unprocessedButtonColor: '#FF5722'  // 默认颜色
+    unprocessedButtonColor: '#eed9d2',    // 未整理按钮颜色
+    processedButtonColor: '#f0f0f0',      // 已整理按钮颜色
+    openNoteButtonColor: '#cee4f8',       // 打开笔记按钮颜色
+    linkButtonColor: '#eefbf6',           // 原文链接按钮颜色
+    copyButtonColor: '#ecdcf9'            // 复制引用按钮颜色
 };
 
 class NoteCardsPlugin extends obsidian.Plugin {
@@ -103,6 +107,8 @@ class NoteCardsSettingTab extends obsidian.PluginSettingTab {
                     await this.plugin.saveSettings();
                 }));
 
+        containerEl.createEl('h3', {text: '按钮颜色设置'});
+
         new obsidian.Setting(containerEl)
             .setName('未整理按钮颜色')
             .setDesc('设置未整理状态按钮的颜色')
@@ -111,11 +117,71 @@ class NoteCardsSettingTab extends obsidian.PluginSettingTab {
                 .onChange(async (value) => {
                     this.plugin.settings.unprocessedButtonColor = value;
                     await this.plugin.saveSettings();
-                    // 更新所有未整理按钮的颜色
-                    document.querySelectorAll('button.unprocessed').forEach(button => {
-                        button.style.backgroundColor = value;
-                    });
+                    this.updateButtonColors();
                 }));
+
+        new obsidian.Setting(containerEl)
+            .setName('已整理按钮颜色')
+            .setDesc('设置已整理状态按钮的颜色')
+            .addColorPicker(color => color
+                .setValue(this.plugin.settings.processedButtonColor)
+                .onChange(async (value) => {
+                    this.plugin.settings.processedButtonColor = value;
+                    await this.plugin.saveSettings();
+                    this.updateButtonColors();
+                }));
+
+        new obsidian.Setting(containerEl)
+            .setName('打开笔记按钮颜色')
+            .setDesc('设置打开笔记按钮的颜色')
+            .addColorPicker(color => color
+                .setValue(this.plugin.settings.openNoteButtonColor)
+                .onChange(async (value) => {
+                    this.plugin.settings.openNoteButtonColor = value;
+                    await this.plugin.saveSettings();
+                    this.updateButtonColors();
+                }));
+
+        new obsidian.Setting(containerEl)
+            .setName('原文链接按钮颜色')
+            .setDesc('设置原文链接按钮的颜色')
+            .addColorPicker(color => color
+                .setValue(this.plugin.settings.linkButtonColor)
+                .onChange(async (value) => {
+                    this.plugin.settings.linkButtonColor = value;
+                    await this.plugin.saveSettings();
+                    this.updateButtonColors();
+                }));
+
+        new obsidian.Setting(containerEl)
+            .setName('复制引用按钮颜色')
+            .setDesc('设置复制引用按钮的颜色')
+            .addColorPicker(color => color
+                .setValue(this.plugin.settings.copyButtonColor)
+                .onChange(async (value) => {
+                    this.plugin.settings.copyButtonColor = value;
+                    await this.plugin.saveSettings();
+                    this.updateButtonColors();
+                }));
+    }
+
+    updateButtonColors() {
+        // 更新所有按钮的颜色
+        document.querySelectorAll('button.unprocessed').forEach(button => {
+            button.style.backgroundColor = this.plugin.settings.unprocessedButtonColor;
+        });
+        document.querySelectorAll('button.processed').forEach(button => {
+            button.style.backgroundColor = this.plugin.settings.processedButtonColor;
+        });
+        document.querySelectorAll('button.open-note').forEach(button => {
+            button.style.backgroundColor = this.plugin.settings.openNoteButtonColor;
+        });
+        document.querySelectorAll('button.source-link').forEach(button => {
+            button.style.backgroundColor = this.plugin.settings.linkButtonColor;
+        });
+        document.querySelectorAll('button.copy-reference').forEach(button => {
+            button.style.backgroundColor = this.plugin.settings.copyButtonColor;
+        });
     }
 }
 
@@ -287,33 +353,56 @@ class CardView extends obsidian.ItemView {
         // 创建按钮容器
         const buttonContainer = card.createDiv('card-buttons');
         
-        // 添加状态切换按钮
+        // 添加状态切换按钮（使用图标）
         const statusButton = buttonContainer.createEl('button', {
-            text: note.isProcessed ? '已整理' : '未整理',
-            cls: note.isProcessed ? 'processed' : 'unprocessed'
+            cls: `icon-button ${note.isProcessed ? 'processed' : 'unprocessed'}`
         });
+        statusButton.setText(note.isProcessed ? '已整理' : '未整理');
         
-        if (!note.isProcessed) {
+        if (note.isProcessed) {
+            statusButton.style.backgroundColor = this.plugin.settings.processedButtonColor;
+        } else {
             statusButton.style.backgroundColor = this.plugin.settings.unprocessedButtonColor;
         }
         
-        // 添加打开笔记按钮
+        // 添加打开笔记按钮（使用图标）
         const openButton = buttonContainer.createEl('button', {
-            text: '打开笔记',
-            cls: 'open-note'
+            cls: 'open-note icon-button'
         });
+        obsidian.setIcon(openButton, 'file-text');
+        openButton.setAttribute('aria-label', '打开笔记');
+        openButton.style.backgroundColor = this.plugin.settings.openNoteButtonColor;
 
-        // 如果存在链接，添加原文链接按钮
+        // 如果存在链接，添加原文链接按钮（使用图标）
         if (note.link) {
             const linkButton = buttonContainer.createEl('button', {
-                text: '原文链接',
-                cls: 'source-link'
+                cls: 'source-link icon-button'
             });
+            obsidian.setIcon(linkButton, 'external-link');
+            linkButton.setAttribute('aria-label', '原文链接');
+            linkButton.style.backgroundColor = this.plugin.settings.linkButtonColor;
             linkButton.onclick = (e) => {
                 e.stopPropagation();
                 window.open(note.link, '_blank');
             };
         }
+
+        // 添加复制引用按钮（使用图标）
+        const copyButton = buttonContainer.createEl('button', {
+            cls: 'copy-reference icon-button'
+        });
+        obsidian.setIcon(copyButton, 'link');
+        copyButton.setAttribute('aria-label', '复制引用');
+        copyButton.style.backgroundColor = this.plugin.settings.copyButtonColor;
+        copyButton.onclick = (e) => {
+            e.stopPropagation();
+            const referenceText = `[[${note.file.basename}]]`;
+            navigator.clipboard.writeText(referenceText).then(() => {
+                new obsidian.Notice('已复制笔记引用到剪贴板');
+            }).catch(() => {
+                new obsidian.Notice('复制引用失败');
+            });
+        };
 
         statusButton.onclick = async (e) => {
             e.stopPropagation();
